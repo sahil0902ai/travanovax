@@ -54,9 +54,39 @@ function Stars({ count = 5 }) {
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({ dynamicContent }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  const subtitle = dynamicContent?.subtitle || 'What Travellers Say';
+  const title = dynamicContent?.title || 'Real Stories, Real Trips';
+  
+  const reviewsList = dynamicContent?.reviews || [
+    {
+      name: 'Priya Sharma',
+      location: 'Mumbai',
+      initials: 'PS',
+      stars: 5,
+      tag: 'Booked: Bali Honeymoon',
+      quote: 'Every detail was perfect. We didn\'t have to think about a single thing.',
+    },
+    {
+      name: 'Rahul Mehta',
+      location: 'Pune',
+      initials: 'RM',
+      stars: 5,
+      tag: 'Booked: Europe Family Tour',
+      quote: 'Travelling to 5 countries with two kids — they made it completely seamless.',
+    },
+    {
+      name: 'Karan Joshi',
+      location: 'Delhi',
+      initials: 'KJ',
+      stars: 5,
+      tag: 'Booked: Thailand Solo Trip',
+      quote: 'First-time solo traveller and I had the best experience of my life.',
+    },
+  ];
 
   return (
     <section id="testimonials" className="py-12 md:py-20 bg-white">
@@ -71,10 +101,10 @@ export default function Testimonials() {
           className="text-center mb-8 sm:mb-12"
         >
           <span className="text-[#e38d37] text-xs font-bold uppercase tracking-widest mb-2 block">
-            What Travellers Say
+            {subtitle}
           </span>
           <h2 className="text-2xl sm:text-4xl font-black text-[#1c4d6f]">
-            Real Stories, Real Trips
+            {title}
           </h2>
           <p className="text-gray-400 text-xs mt-2">
             ⚠ Placeholder reviews — replace with verified customer testimonials before launch
@@ -83,13 +113,12 @@ export default function Testimonials() {
 
         {/* 3 cards — single column mobile, 3-col desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          {REVIEWS.map((r, i) => (
+          {reviewsList.map((r, i) => (
             <motion.article
               key={r.name}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              /* Light card — no heavy shadows, just a gentle border */
               className="bg-gray-50 rounded-2xl p-5 sm:p-6
                          border border-gray-100
                          flex flex-col gap-3

@@ -70,7 +70,15 @@ function QuoteWidget({ onQuickEnquiry }) {
 }
 
 // ─── Hero Section ──────────────────────────────────────────────────────────────
-export default function Hero({ onOpenQuote, onQuickEnquiry }) {
+export default function Hero({ onOpenQuote, onQuickEnquiry, dynamicContent }) {
+  const headline = dynamicContent?.headline || 'Trip Planning That Actually Feels Easy.';
+  const subheadline = dynamicContent?.subheadline || 'From that first spark of "Where should we go?" to the moment you land back home — we take care of every detail so you can simply show up and enjoy the journey.';
+  const statsList = dynamicContent?.stats || [
+    { value: '500+', label: 'Happy Travellers' },
+    { value: '50+', label: 'Destinations' },
+    { value: '5★', label: 'Rated Service' },
+  ];
+
   return (
     <section
       id="hero"
@@ -110,7 +118,7 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
           </span>
         </motion.div>
 
-        {/* Headline — switchable between Option A and B */}
+        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,7 +130,11 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
                      mb-3 sm:mb-5"
           style={{ textShadow: '0 2px 30px rgba(0,0,0,0.45)' }}
         >
-          {ACTIVE_HEADLINE}
+          {headline.includes('<br') ? (
+            <span dangerouslySetInnerHTML={{ __html: headline }} />
+          ) : (
+            headline
+          )}
         </motion.h1>
 
         {/* Subheadline */}
@@ -130,17 +142,9 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.25 }}
-          className="text-white/80 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2 sm:px-0"
+          className="text-white/80 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2 sm:px-0 text-sm sm:text-xl"
         >
-          {/* Mobile — condensed to 2 lines max */}
-          <span className="sm:hidden text-sm">
-            Flights, hotels, visas, and personalised itineraries — handled for you, start to finish.
-          </span>
-          {/* Desktop — full version */}
-          <span className="hidden sm:inline text-xl">
-            From that first spark of "Where should we go?" to the moment you land back home —
-            we take care of every detail so you can simply show up and enjoy the journey.
-          </span>
+          {subheadline}
         </motion.p>
 
         {/* Mobile CTA (widget handles desktop) */}
@@ -168,11 +172,7 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
           transition={{ duration: 0.9, delay: 0.6 }}
           className="flex flex-wrap justify-center gap-6 sm:gap-12 mt-0 sm:mt-4 mb-4 sm:mb-0"
         >
-          {[
-            { value: '500+', label: 'Happy Travellers' },
-            { value: '50+', label: 'Destinations' },
-            { value: '5★', label: 'Rated Service' },
-          ].map((stat) => (
+          {statsList.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-xl sm:text-3xl font-black text-[#e38d37]">{stat.value}</div>
               <div className="text-[10px] sm:text-sm text-white/70 mt-0.5 font-medium">{stat.label}</div>
