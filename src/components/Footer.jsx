@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImg from '../assets/logo.jpg';
 
 /* ─── Brand constants ─────────────────────────────────────────────────────── */
 const PHONE = '+91 99999 99999';
@@ -74,8 +75,11 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             {/* Logo */}
             <a href="#hero" onClick={(e) => scrollTo(e, '#hero')} className="inline-flex items-center">
-              <span className="text-[#F2A65A] text-2xl font-black tracking-tight">TRAVANO</span>
-              <span className="text-white text-2xl font-black tracking-tight">VAX</span>
+              <img
+                src={logoImg}
+                alt="TRAVANOVAX — Explore the Extraordinary"
+                className="rounded-lg object-cover w-36 h-11 shadow-md"
+              />
             </a>
 
             {/* Tagline */}

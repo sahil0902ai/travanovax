@@ -9,6 +9,8 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
+import logoImg from '../assets/logo.jpg';
+
 const PHONE_NUMBER = '+91 99999 99999';
 const PHONE_HREF = 'tel:+919999999999';
 const WHATSAPP_HREF = 'https://wa.me/919999999999?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!';
@@ -72,18 +74,19 @@ export default function Navbar({ onOpenQuote }) {
             scrolled ? 'h-12 md:h-14' : 'h-14 md:h-16'
           }`}
         >
-          {/* Logo */}
+          {/* Logo Badge */}
           <a
             href="#hero"
             onClick={(e) => handleNav(e, '#hero')}
             className="flex items-center shrink-0"
           >
-            <span className={`text-[#F2A65A] font-black tracking-tight transition-all duration-300 ${scrolled ? 'text-lg' : 'text-xl'}`}>
-              TRAVANO
-            </span>
-            <span className={`text-white font-black tracking-tight transition-all duration-300 ${scrolled ? 'text-lg' : 'text-xl'}`}>
-              VAX
-            </span>
+            <img
+              src={logoImg}
+              alt="TRAVANOVAX — Explore the Extraordinary"
+              className={`rounded-lg object-cover transition-all duration-300 shadow-md ${
+                scrolled ? 'h-9 w-28 sm:w-32' : 'h-11 w-32 sm:w-36'
+              }`}
+            />
           </a>
 
           {/* Desktop nav links */}
