@@ -34,7 +34,7 @@ export default function FloatingButtons() {
         <a
           href="tel:+919999999999"
           aria-label="Call TRAVANOVAX"
-          className="w-10 h-10 md:w-12 md:h-12 bg-[#0B4F6C] hover:bg-[#0a4561] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 min-w-[40px]"
+          className="w-10 h-10 md:w-12 md:h-12 bg-[#1c4d6f] hover:bg-[#163f5b] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 min-w-[40px]"
         >
           <PhoneIcon />
         </a>

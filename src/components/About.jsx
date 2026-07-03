@@ -37,12 +37,12 @@ export default function About() {
               />
             </div>
             {/* Floating badge */}
-            <div className="absolute -bottom-6 -right-6 bg-[#F2A65A] text-white rounded-2xl p-5 shadow-xl hidden sm:flex flex-col items-center">
+            <div className="absolute -bottom-6 -right-6 bg-[#e38d37] text-white rounded-2xl p-5 shadow-xl hidden sm:flex flex-col items-center">
               <span className="text-3xl font-black leading-none">500+</span>
               <span className="text-xs font-semibold opacity-90 mt-1 text-center">Happy<br/>Travellers</span>
             </div>
             {/* Decorative blob */}
-            <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-[#0B4F6C]/10 blur-2xl -z-10" />
+            <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-[#1c4d6f]/10 blur-2xl -z-10" />
           </motion.div>
 
           {/* Text side */}
@@ -51,12 +51,12 @@ export default function About() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
           >
-            <span className="text-[#F2A65A] text-sm font-bold uppercase tracking-widest mb-3 block">
+            <span className="text-[#e38d37] text-sm font-bold uppercase tracking-widest mb-3 block">
               Our Philosophy
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0B4F6C] mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1c4d6f] mb-6 leading-tight">
               Crafting Travel Experiences<br />
-              <span className="text-[#F2A65A]">That Stay With You Forever</span>
+              <span className="text-[#e38d37]">That Stay With You Forever</span>
             </h2>
             <div className="space-y-4 text-gray-600 text-base leading-relaxed mb-8">
               <p>
@@ -74,8 +74,8 @@ export default function About() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {highlights.map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3 text-sm text-gray-700 font-medium">
-                  <div className="w-8 h-8 rounded-lg bg-[#0B4F6C]/10 flex items-center justify-center flex-shrink-0">
-                    <Icon size={16} className="text-[#0B4F6C]" />
+                  <div className="w-8 h-8 rounded-lg bg-[#1c4d6f]/10 flex items-center justify-center flex-shrink-0">
+                    <Icon size={16} className="text-[#1c4d6f]" />
                   </div>
                   {text}
                 </div>

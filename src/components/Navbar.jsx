@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
-import logoImg from '../assets/logo.jpg';
+import logoImg from '../assets/logo_header.jpg';
 
 const PHONE_NUMBER = '+91 99999 99999';
 const PHONE_HREF = 'tel:+919999999999';
@@ -35,8 +35,8 @@ export default function Navbar({ onOpenQuote }) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#0B4F6C]/97 backdrop-blur-md shadow-lg'
-          : 'bg-[#0B4F6C]/85 backdrop-blur-sm'
+          ? 'bg-[#1c4d6f]/97 backdrop-blur-md shadow-lg'
+          : 'bg-[#1c4d6f]/85 backdrop-blur-sm'
       }`}
     >
       {/* Desktop-only top contact bar */}
@@ -45,7 +45,7 @@ export default function Navbar({ onOpenQuote }) {
           <div className="flex items-center justify-end gap-6 py-1.5">
             <a
               href={PHONE_HREF}
-              className="flex items-center gap-1.5 text-white/80 hover:text-[#F2A65A] text-xs font-medium transition-colors"
+              className="flex items-center gap-1.5 text-white/80 hover:text-[#e38d37] text-xs font-medium transition-colors"
             >
               <Phone size={12} />
               {PHONE_NUMBER}
@@ -82,9 +82,9 @@ export default function Navbar({ onOpenQuote }) {
           >
             <img
               src={logoImg}
-              alt="TRAVANOVAX — Explore the Extraordinary"
-              className={`rounded-lg object-contain bg-white p-1 transition-all duration-300 shadow-md ${
-                scrolled ? 'h-10 w-28 sm:w-32' : 'h-12 w-32 sm:w-36'
+              alt="TRAVANOVAX"
+              className={`rounded-full object-contain bg-white p-[6px] transition-all duration-300 shadow-md w-auto ${
+                scrolled ? 'h-[28px] md:h-[36px]' : 'h-[32px] md:h-[40px]'
               }`}
             />
           </a>
@@ -96,14 +96,14 @@ export default function Navbar({ onOpenQuote }) {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNav(e, link.href)}
-                className="text-white/85 hover:text-[#F2A65A] font-medium transition-colors text-sm tracking-wide"
+                className="text-white/85 hover:text-[#e38d37] font-medium transition-colors text-sm tracking-wide"
               >
                 {link.label}
               </a>
             ))}
             <button
               onClick={onOpenQuote}
-              className="ml-2 bg-[#F2A65A] hover:bg-[#e8924a] text-white font-bold px-5 py-2.5 rounded-xl transition-all hover:shadow-lg hover:shadow-[#F2A65A]/30 hover:-translate-y-0.5 text-sm min-h-[44px]"
+              className="ml-2 bg-[#e38d37] hover:bg-[#d17e2e] text-white font-bold px-5 py-2.5 rounded-xl transition-all hover:shadow-lg hover:shadow-[#e38d37]/30 hover:-translate-y-0.5 text-sm min-h-[44px]"
             >
               Get a Free Quote
             </button>
@@ -115,7 +115,7 @@ export default function Navbar({ onOpenQuote }) {
             <a
               href={PHONE_HREF}
               aria-label="Call us"
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-white/80 hover:text-[#F2A65A] transition-colors rounded-lg"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-white/80 hover:text-[#e38d37] transition-colors rounded-lg"
             >
               <Phone size={19} />
             </a>
@@ -133,7 +133,7 @@ export default function Navbar({ onOpenQuote }) {
             <button
               onClick={onOpenQuote}
               aria-label="Get a free quote"
-              className="bg-[#F2A65A] hover:bg-[#e8924a] text-white font-bold text-xs px-3 py-1.5 rounded-lg transition-colors min-h-[36px] leading-none"
+              className="bg-[#e38d37] hover:bg-[#d17e2e] text-white font-bold text-xs px-3 py-1.5 rounded-lg transition-colors min-h-[36px] leading-none"
             >
               Quote
             </button>
@@ -166,7 +166,7 @@ export default function Navbar({ onOpenQuote }) {
                   key={link.label}
                   href={link.href}
                   onClick={(e) => handleNav(e, link.href)}
-                  className="text-white/90 hover:text-[#F2A65A] font-medium py-3 text-base transition-colors border-b border-white/5 flex items-center justify-between"
+                  className="text-white/90 hover:text-[#e38d37] font-medium py-3 text-base transition-colors border-b border-white/5 flex items-center justify-between"
                 >
                   {link.label}
                   <span className="text-white/30 text-sm">›</span>
@@ -174,7 +174,7 @@ export default function Navbar({ onOpenQuote }) {
               ))}
               <button
                 onClick={() => { setMobileOpen(false); onOpenQuote(); }}
-                className="mt-3 bg-[#F2A65A] hover:bg-[#e8924a] text-white font-bold py-3.5 rounded-xl text-center transition-colors text-sm min-h-[48px]"
+                className="mt-3 bg-[#e38d37] hover:bg-[#d17e2e] text-white font-bold py-3.5 rounded-xl text-center transition-colors text-sm min-h-[48px]"
               >
                 Get a Free Quote
               </button>

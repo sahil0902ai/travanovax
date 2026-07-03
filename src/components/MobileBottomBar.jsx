@@ -22,7 +22,7 @@ export default function MobileBottomBar({ onOpenQuote }) {
           <a
             href="tel:+919999999999"
             aria-label="Call TRAVANOVAX"
-            className="flex-none w-12 h-12 bg-[#0B4F6C]/10 active:bg-[#0B4F6C]/20 rounded-xl flex flex-col items-center justify-center text-[#0B4F6C] transition-colors"
+            className="flex-none w-12 h-12 bg-[#1c4d6f]/10 active:bg-[#1c4d6f]/20 rounded-xl flex flex-col items-center justify-center text-[#1c4d6f] transition-colors"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
               strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -48,7 +48,7 @@ export default function MobileBottomBar({ onOpenQuote }) {
           {/* Primary enquiry button — fills remaining space */}
           <button
             onClick={onOpenQuote}
-            className="flex-1 bg-[#F2A65A] active:bg-[#e8924a] text-white font-bold py-3.5 rounded-xl text-sm transition-colors shadow-lg shadow-[#F2A65A]/25 flex items-center justify-center gap-2 min-h-[48px]"
+            className="flex-1 bg-[#e38d37] active:bg-[#d17e2e] text-white font-bold py-3.5 rounded-xl text-sm transition-colors shadow-lg shadow-[#e38d37]/25 flex items-center justify-center gap-2 min-h-[48px]"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
               strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">

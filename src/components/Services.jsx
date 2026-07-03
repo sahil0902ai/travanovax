@@ -9,25 +9,25 @@ const services = [
     icon: Package,
     title: 'Holiday Packages',
     description: 'Thoughtfully designed holidays — honeymoons, family trips, group tours, and solo adventures — built around what matters to you, not a template.',
-    color: 'from-[#0B4F6C] to-[#1a7fa8]',
+    color: 'from-[#1c4d6f] to-[#1a7fa8]',
   },
   {
     icon: Plane,
     title: 'Flight Booking',
     description: 'We search, compare, and book the best fares so you never overpay. Domestic, international, multi-city — with flexible options and zero hidden charges.',
-    color: 'from-[#F2A65A] to-[#f0b87a]',
+    color: 'from-[#e38d37] to-[#f0b87a]',
   },
   {
     icon: Hotel,
     title: 'Hotel & Resort Stays',
     description: 'From cosy boutique guesthouses to five-star beach resorts — handpicked for quality, value, and location, with rates you won\'t find on your own.',
-    color: 'from-[#0B4F6C] to-[#1a7fa8]',
+    color: 'from-[#1c4d6f] to-[#1a7fa8]',
   },
   {
     icon: FileCheck,
     title: 'Visa Assistance',
     description: 'Confused about which documents to submit? We guide you through every step — checklists, form filling, appointment booking — so your visa application is stress-free.',
-    color: 'from-[#F2A65A] to-[#f0b87a]',
+    color: 'from-[#e38d37] to-[#f0b87a]',
   },
 ];
 
@@ -60,11 +60,11 @@ function ServiceCard({ service, index }) {
         <Icon size={26} className="text-white" />
       </div>
       <div>
-        <h3 className="text-xl font-bold text-[#0B4F6C] mb-2">{service.title}</h3>
+        <h3 className="text-xl font-bold text-[#1c4d6f] mb-2">{service.title}</h3>
         <p className="text-gray-500 leading-relaxed text-sm">{service.description}</p>
       </div>
       <div className="mt-auto">
-        <span className="text-[#F2A65A] text-sm font-semibold group-hover:underline cursor-pointer">
+        <span className="text-[#e38d37] text-sm font-semibold group-hover:underline cursor-pointer">
           Learn more →
         </span>
       </div>
@@ -87,10 +87,10 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10 md:mb-16"
         >
-          <span className="text-[#F2A65A] text-sm font-bold uppercase tracking-widest mb-3 block">
+          <span className="text-[#e38d37] text-sm font-bold uppercase tracking-widest mb-3 block">
             What We Do
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0B4F6C] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1c4d6f] mb-4">
             Everything Your Trip Needs
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto text-base sm:text-lg">

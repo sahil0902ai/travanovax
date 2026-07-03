@@ -1,5 +1,5 @@
 import React from 'react';
-import logoImg from '../assets/logo.jpg';
+import logoImg from '../assets/logo_footer.jpg';
 
 /* ─── Brand constants ─────────────────────────────────────────────────────── */
 const PHONE = '+91 99999 99999';
@@ -78,7 +78,7 @@ export default function Footer() {
               <img
                 src={logoImg}
                 alt="TRAVANOVAX — Explore the Extraordinary"
-                className="rounded-lg object-contain bg-white p-1 w-36 h-12 shadow-md"
+                className="rounded-2xl object-contain bg-white p-[10px] h-[60px] md:h-[70px] w-auto shadow-md"
               />
             </a>
 
@@ -102,7 +102,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-white/8 hover:bg-[#F2A65A]
+                  className="w-9 h-9 rounded-lg bg-white/8 hover:bg-[#e38d37]
                              flex items-center justify-center text-white
                              transition-all duration-200 hover:-translate-y-0.5"
                 >
@@ -114,7 +114,7 @@ export default function Footer() {
 
           {/* ── Column 2: Quick Links ────────────────────────────────────── */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[#F2A65A] mb-5">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#e38d37] mb-5">
               Quick Links
             </h3>
             <ul className="flex flex-col gap-2.5">
@@ -127,7 +127,7 @@ export default function Footer() {
                                transition-colors duration-200
                                flex items-center gap-1.5 group"
                   >
-                    <span className="text-[#F2A65A]/0 group-hover:text-[#F2A65A]
+                    <span className="text-[#e38d37]/0 group-hover:text-[#e38d37]
                                      transition-colors text-xs leading-none">›</span>
                     {label}
                   </a>
@@ -138,7 +138,7 @@ export default function Footer() {
 
           {/* ── Column 3: Contact ────────────────────────────────────────── */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-[#F2A65A] mb-5">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-[#e38d37] mb-5">
               Get In Touch
             </h3>
             <ul className="flex flex-col gap-4 text-sm">

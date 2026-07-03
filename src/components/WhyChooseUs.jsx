@@ -15,8 +15,8 @@ const stats = [
     number: '500+',
     label: 'Happy Travellers',
     sub: '100% personalised itineraries',
-    color: 'text-[#F2A65A]',
-    bg: 'bg-[#F2A65A]/15',
+    color: 'text-[#e38d37]',
+    bg: 'bg-[#e38d37]/15',
   },
   {
     icon: Clock,
@@ -61,7 +61,7 @@ export default function WhyChooseUs() {
         }}
       />
       {/* Decorative blobs */}
-      <div className="absolute -top-16 -left-16 w-64 h-64 rounded-full bg-[#F2A65A]/10 blur-3xl pointer-events-none" />
+      <div className="absolute -top-16 -left-16 w-64 h-64 rounded-full bg-[#e38d37]/10 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-sky-400/10 blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,12 +74,12 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.55 }}
           className="text-center mb-10 sm:mb-14"
         >
-          <span className="text-[#F2A65A] text-xs font-bold uppercase tracking-widest mb-3 block">
+          <span className="text-[#e38d37] text-xs font-bold uppercase tracking-widest mb-3 block">
             Why Choose Us
           </span>
           <h2 className="text-2xl sm:text-4xl font-black text-white leading-tight">
             Trusted by Travellers.{' '}
-            <span className="text-[#F2A65A]">Built on Results.</span>
+            <span className="text-[#e38d37]">Built on Results.</span>
           </h2>
         </motion.div>
 

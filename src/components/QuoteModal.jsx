@@ -39,7 +39,7 @@ function FieldError({ message }) {
 const inputClasses = (hasError) =>
   `w-full px-4 py-3.5 rounded-xl border ${
     hasError ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'
-  } text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0B4F6C]/30 focus:border-[#0B4F6C] transition-all text-base min-h-[48px]`;
+  } text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1c4d6f]/30 focus:border-[#1c4d6f] transition-all text-base min-h-[48px]`;
 
 export default function QuoteModal({ isOpen, onClose }) {
   const [fields, setFields] = useState({ name: '', email: '', phone: '', destination: '' });
@@ -128,7 +128,7 @@ export default function QuoteModal({ isOpen, onClose }) {
           >
             <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md relative overflow-hidden">
               {/* Modal header */}
-              <div className="bg-gradient-to-r from-[#0B4F6C] to-[#1a7fa8] px-6 pt-6 pb-5">
+              <div className="bg-gradient-to-r from-[#1c4d6f] to-[#1a7fa8] px-6 pt-6 pb-5">
                 <button
                   onClick={handleClose}
                   className="absolute top-4 right-4 text-white/70 hover:text-white hover:bg-white/10 rounded-full p-1.5 transition-all"
@@ -137,7 +137,7 @@ export default function QuoteModal({ isOpen, onClose }) {
                   <X size={18} />
                 </button>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#F2A65A] flex items-center justify-center text-lg">
+                  <div className="w-10 h-10 rounded-xl bg-[#e38d37] flex items-center justify-center text-lg">
                     ✈️
                   </div>
                   <div>
@@ -161,13 +161,13 @@ export default function QuoteModal({ isOpen, onClose }) {
                       <div className="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center">
                         <CheckCircle2 size={30} className="text-green-500" />
                       </div>
-                      <h3 className="text-lg font-bold text-[#0B4F6C]">You're all set!</h3>
+                      <h3 className="text-lg font-bold text-[#1c4d6f]">You're all set!</h3>
                       <p className="text-gray-500 text-sm max-w-xs">
                         Our travel expert will reach out within 24 hours with a personalised quote.
                       </p>
                       <button
                         onClick={handleClose}
-                        className="mt-2 bg-[#0B4F6C] text-white font-semibold px-6 py-2.5 rounded-xl text-sm hover:bg-[#0a4561] transition-colors"
+                        className="mt-2 bg-[#1c4d6f] text-white font-semibold px-6 py-2.5 rounded-xl text-sm hover:bg-[#163f5b] transition-colors"
                       >
                         Close
                       </button>
@@ -229,7 +229,7 @@ export default function QuoteModal({ isOpen, onClose }) {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="mt-1 bg-[#F2A65A] hover:bg-[#e8924a] disabled:opacity-70 text-white font-bold px-6 py-3.5 rounded-xl transition-all hover:shadow-xl hover:shadow-[#F2A65A]/30 flex items-center justify-center gap-2 text-sm"
+                        className="mt-1 bg-[#e38d37] hover:bg-[#d17e2e] disabled:opacity-70 text-white font-bold px-6 py-3.5 rounded-xl transition-all hover:shadow-xl hover:shadow-[#e38d37]/30 flex items-center justify-center gap-2 text-sm"
                       >
                         {loading ? (
                           <>

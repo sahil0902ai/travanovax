@@ -40,7 +40,7 @@ function FieldError({ message }) {
 const inputClasses = (hasError) =>
   `w-full px-4 py-3.5 rounded-xl border ${
     hasError ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'
-  } text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0B4F6C]/30 focus:border-[#0B4F6C] transition-all text-base min-h-[48px]`;
+  } text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1c4d6f]/30 focus:border-[#1c4d6f] transition-all text-base min-h-[48px]`;
 
 export default function ContactForm({ prefillDest = '' }) {
   const ref = useRef(null);
@@ -119,10 +119,10 @@ export default function ContactForm({ prefillDest = '' }) {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="text-[#F2A65A] text-sm font-bold uppercase tracking-widest mb-3 block">
+          <span className="text-[#e38d37] text-sm font-bold uppercase tracking-widest mb-3 block">
             Get In Touch
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0B4F6C] mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1c4d6f] mb-4">
             Let's Plan Your Trip
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto text-base sm:text-lg">
@@ -149,13 +149,13 @@ export default function ContactForm({ prefillDest = '' }) {
                   <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
                     <CheckCircle2 size={36} className="text-green-500" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#0B4F6C]">Inquiry Sent!</h3>
+                  <h3 className="text-xl font-bold text-[#1c4d6f]">Inquiry Sent!</h3>
                   <p className="text-gray-500 text-sm max-w-xs">
                     Thanks for reaching out! Our team will contact you within 24 hours to craft your perfect trip.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="mt-2 text-[#F2A65A] font-semibold text-sm hover:underline"
+                    className="mt-2 text-[#e38d37] font-semibold text-sm hover:underline"
                   >
                     Submit another inquiry
                   </button>
@@ -252,7 +252,7 @@ export default function ContactForm({ prefillDest = '' }) {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="mt-2 bg-[#0B4F6C] hover:bg-[#0a4561] disabled:opacity-70 text-white font-bold px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm"
+                    className="mt-2 bg-[#1c4d6f] hover:bg-[#163f5b] disabled:opacity-70 text-white font-bold px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm"
                   >
                     {loading ? (
                       <>

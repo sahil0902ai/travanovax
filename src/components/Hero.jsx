@@ -10,7 +10,7 @@ const HERO_IMAGE =
 const HEADLINE_A = (
   <>
     The World Is Waiting —<br />
-    <span className="text-[#F2A65A]">Let's Plan Your Trip.</span>
+    <span className="text-[#e38d37]">Let's Plan Your Trip.</span>
   </>
 );
 
@@ -18,7 +18,7 @@ const HEADLINE_A = (
 const HEADLINE_B = (
   <>
     Trip Planning That<br />
-    <span className="text-[#F2A65A]">Actually Feels Easy.</span>
+    <span className="text-[#e38d37]">Actually Feels Easy.</span>
   </>
 );
 
@@ -41,9 +41,9 @@ function QuoteWidget({ onQuickEnquiry }) {
                  flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
     >
       <div className="flex items-center gap-2.5 flex-1 border border-gray-200 rounded-xl
-                      px-4 py-3 bg-gray-50/60 focus-within:border-[#0B4F6C]/40
-                      focus-within:ring-2 focus-within:ring-[#0B4F6C]/15 transition-all">
-        <MapPin size={18} className="text-[#F2A65A] shrink-0" />
+                      px-4 py-3 bg-gray-50/60 focus-within:border-[#1c4d6f]/40
+                      focus-within:ring-2 focus-within:ring-[#1c4d6f]/15 transition-all">
+        <MapPin size={18} className="text-[#e38d37] shrink-0" />
         <input
           type="text"
           value={dest}
@@ -56,9 +56,9 @@ function QuoteWidget({ onQuickEnquiry }) {
       </div>
       <button
         type="submit"
-        className="group bg-[#F2A65A] hover:bg-[#e8924a] active:bg-[#d4823e]
+        className="group bg-[#e38d37] hover:bg-[#d17e2e] active:bg-[#c07328]
                    text-white font-bold px-6 py-3.5 rounded-xl
-                   transition-all duration-200 hover:shadow-lg hover:shadow-[#F2A65A]/40
+                   transition-all duration-200 hover:shadow-lg hover:shadow-[#e38d37]/40
                    flex items-center justify-center gap-2
                    whitespace-nowrap min-h-[48px] shrink-0 text-sm sm:text-base"
       >
@@ -86,11 +86,11 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
           aria-label="A traveller standing at a stunning mountain viewpoint"
         />
         <div className="absolute inset-0 bg-gradient-to-b
-                        from-[#0B4F6C]/65 via-[#0B4F6C]/40 to-[#071a24]/92" />
+                        from-[#1c4d6f]/65 via-[#1c4d6f]/40 to-[#071a24]/92" />
         <div className="hidden sm:block absolute top-1/4 left-0 w-64 h-64
-                        rounded-full bg-[#F2A65A]/10 blur-3xl" />
+                        rounded-full bg-[#e38d37]/10 blur-3xl" />
         <div className="hidden sm:block absolute bottom-1/3 right-0 w-72 h-72
-                        rounded-full bg-[#0B4F6C]/30 blur-3xl" />
+                        rounded-full bg-[#1c4d6f]/30 blur-3xl" />
       </div>
 
       {/* Main content */}
@@ -103,8 +103,8 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="inline-block bg-[#F2A65A]/20 border border-[#F2A65A]/40
-                           text-[#F2A65A] text-xs font-bold px-4 py-1.5 rounded-full
+          <span className="inline-block bg-[#e38d37]/20 border border-[#e38d37]/40
+                           text-[#e38d37] text-xs font-bold px-4 py-1.5 rounded-full
                            mb-4 sm:mb-5 tracking-widest uppercase">
             ✈ Crafting Journeys Since 2020
           </span>
@@ -152,7 +152,7 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
         >
           <button
             onClick={onOpenQuote}
-            className="w-full bg-[#F2A65A] active:bg-[#e8924a] text-white font-bold
+            className="w-full bg-[#e38d37] active:bg-[#d17e2e] text-white font-bold
                        px-8 py-4 rounded-2xl text-base min-h-[52px]
                        flex items-center justify-center gap-2"
           >
@@ -174,7 +174,7 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
             { value: '5★', label: 'Rated Service' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-xl sm:text-3xl font-black text-[#F2A65A]">{stat.value}</div>
+              <div className="text-xl sm:text-3xl font-black text-[#e38d37]">{stat.value}</div>
               <div className="text-[10px] sm:text-sm text-white/70 mt-0.5 font-medium">{stat.label}</div>
             </div>
           ))}
@@ -197,7 +197,7 @@ export default function Hero({ onOpenQuote, onQuickEnquiry }) {
           <span className="text-white/50 text-xs">or</span>
           <button
             onClick={onOpenQuote}
-            className="text-[#F2A65A] text-xs font-semibold hover:underline"
+            className="text-[#e38d37] text-xs font-semibold hover:underline"
           >
             open full form ↗
           </button>
