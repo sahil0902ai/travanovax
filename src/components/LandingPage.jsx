@@ -11,10 +11,17 @@ import FloatingButtons from './FloatingButtons';
 import MobileBottomBar from './MobileBottomBar';
 import QuoteModal from './QuoteModal';
 import Footer from './Footer';
+import DestinationsGrid from './DestinationsGrid';
 
-export default function LandingPage({ siteContent = {} }) {
+export default function LandingPage({ siteContent = {}, prefillDest: parentPrefill = '' }) {
   const [quoteOpen, setQuoteOpen] = useState(false);
-  const [prefillDest, setPrefillDest] = useState('');
+  const [prefillDest, setPrefillDest] = useState(parentPrefill);
+
+  React.useEffect(() => {
+    if (parentPrefill) {
+      setPrefillDest(parentPrefill);
+    }
+  }, [parentPrefill]);
 
   const open = useCallback(() => setQuoteOpen(true), []);
   const close = useCallback(() => setQuoteOpen(false), []);
@@ -40,6 +47,8 @@ export default function LandingPage({ siteContent = {} }) {
         <div className="pt-16 sm:pt-20">
           <Services dynamicContent={siteContent.services} />
         </div>
+
+        <DestinationsGrid />
 
         <WhyChooseUs dynamicContent={siteContent.whyChooseUs} />
         <About dynamicContent={siteContent.about} />

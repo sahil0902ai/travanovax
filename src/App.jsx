@@ -1,33 +1,47 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import './index.css';
 import LandingPage from './components/LandingPage';
+import QuoteModal from './components/QuoteModal';
 
 // Code-split the Admin Panel so normal visitors don't download Supabase SDK overhead
 const AdminPanel = lazy(() => import('./components/AdminPanel'));
+// Code-split Destination Guides to optimize bundle size
+const DestinationPage = lazy(() => import('./components/DestinationPage'));
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
+  const [destinationSlug, setDestinationSlug] = useState(null);
   const [siteContent, setSiteContent] = useState({});
   const [contentLoading, setContentLoading] = useState(true);
+
+  // Prefill flow states
+  const [prefillDest, setPrefillDest] = useState('');
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   // Simple path routing
   useEffect(() => {
     const handlePath = () => {
       setIsAdmin(window.location.pathname === '/admin');
+      
+      const destMatch = window.location.pathname.match(/^\/destinations\/([a-zA-Z0-9-]+)/);
+      if (destMatch) {
+        setDestinationSlug(destMatch[1]);
+      } else {
+        setDestinationSlug(null);
+      }
     };
     handlePath();
     window.addEventListener('popstate', handlePath);
     return () => window.removeEventListener('popstate', handlePath);
   }, []);
 
-  // Fetch Supabase Content via REST API to preserve code splitting & avoid eager SDK load
+  // Fetch Supabase Content via REST API
   useEffect(() => {
     const loadContent = async () => {
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
       if (!supabaseUrl || !supabaseAnonKey) {
-        // Fallback to local storage or defaults in local development
         const saved = localStorage.getItem('travanovax_editable_content');
         if (saved) {
           setSiteContent(JSON.parse(saved));
@@ -71,6 +85,31 @@ function App() {
     );
   }
 
+  if (destinationSlug) {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+          <div className="w-10 h-10 border-4 border-[#1c4d6f] border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-xs text-gray-400 mt-2 font-semibold animate-pulse">Loading Destination Guide...</span>
+        </div>
+      }>
+        <DestinationPage 
+          slug={destinationSlug} 
+          onOpenQuote={(destName) => {
+            setPrefillDest(destName);
+            // Navigate back to homepage
+            window.history.pushState({}, '', '/');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+            // Smooth scroll to the form
+            setTimeout(() => {
+              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+        />
+      </Suspense>
+    );
+  }
+
   // Show dynamic loader during Supabase retrieval (only if in Live Mode)
   const isDemo = !import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY;
   if (contentLoading && !isDemo) {
@@ -81,7 +120,12 @@ function App() {
     );
   }
 
-  return <LandingPage siteContent={siteContent} />;
+  return (
+    <>
+      <LandingPage siteContent={siteContent} prefillDest={prefillDest} />
+      <QuoteModal isOpen={quoteOpen} onClose={() => setQuoteOpen(false)} />
+    </>
+  );
 }
 
 export default App;
