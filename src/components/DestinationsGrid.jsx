@@ -2,36 +2,77 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MapPin, Calendar, ArrowRight } from 'lucide-react';
 
-const DESTINATIONS = [
+const DESTINATIONS_FALLBACK = [
   {
     slug: 'bali',
     title: 'Bali Tropical Escapes',
-    description: 'Private pool villas, scenic Ubud temples, and pristine Nusa Penida beach cruises.',
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80',
+    tagline: 'Private pool villas, scenic Ubud temples, and pristine Nusa Penida beach cruises.',
+    hero_image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80',
     duration: '6 Days / 5 Nights',
-    price: '₹45,000 onwards'
+    price_estimate: '₹45,000 onwards'
   },
   {
     slug: 'europe',
     title: 'European Grandeur Tour',
-    description: 'Paris Eiffel excursion, Swiss Alps cable cars, and romantic Venice Gondola canals.',
-    image: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?auto=format&fit=crop&w=600&q=80',
+    tagline: 'Paris Eiffel excursion, Swiss Alps cable cars, and romantic Venice Gondola canals.',
+    hero_image: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?auto=format&fit=crop&w=600&q=80',
     duration: '10 Days / 9 Nights',
-    price: '₹1,85,000 onwards'
+    price_estimate: '₹1,85,000 onwards'
   },
   {
     slug: 'switzerland',
     title: 'Swiss Alpine Luxury',
-    description: 'Scenic Swiss Pass trains, alpine peaks, and private watches atelier craft tours.',
-    image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80',
+    tagline: 'Scenic Swiss Pass trains, alpine peaks, and private watches atelier craft tours.',
+    hero_image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=600&q=80',
     duration: '8 Days / 7 Nights',
-    price: '₹2,20,000 onwards'
+    price_estimate: '₹2,20,000 onwards'
   }
 ];
 
 export default function DestinationsGrid() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
+  const [destinations, setDestinations] = React.useState([]);
+
+  React.useEffect(() => {
+    const loadDests = async () => {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        const saved = localStorage.getItem('travanovax_editable_destinations');
+        if (saved) {
+          setDestinations(JSON.parse(saved));
+        } else {
+          setDestinations(DESTINATIONS_FALLBACK);
+        }
+      } else {
+        try {
+          const url = `${supabaseUrl}/rest/v1/destinations?select=*`;
+          const response = await fetch(url, {
+            headers: {
+              'apikey': supabaseAnonKey,
+              'Authorization': `Bearer ${supabaseAnonKey}`
+            }
+          });
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.length > 0) {
+              setDestinations(data);
+            } else {
+              setDestinations(DESTINATIONS_FALLBACK);
+            }
+          } else {
+            setDestinations(DESTINATIONS_FALLBACK);
+          }
+        } catch (err) {
+          console.error("Failed to load destinations via REST API:", err);
+          setDestinations(DESTINATIONS_FALLBACK);
+        }
+      }
+    };
+    loadDests();
+  }, []);
 
   const handleNavigate = (slug, e) => {
     e.preventDefault();
@@ -64,7 +105,7 @@ export default function DestinationsGrid() {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {DESTINATIONS.map((dest, i) => (
+          {destinations.map((dest, i) => (
             <motion.div
               key={dest.slug}
               initial={{ opacity: 0, y: 40 }}
@@ -75,7 +116,7 @@ export default function DestinationsGrid() {
               {/* Image Banner */}
               <div className="relative h-56 sm:h-64 overflow-hidden">
                 <img
-                  src={dest.image}
+                  src={dest.hero_image}
                   alt={dest.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
@@ -95,13 +136,13 @@ export default function DestinationsGrid() {
                 
                 <div>
                   <h3 className="text-xl font-bold text-[#1c4d6f] mb-2">{dest.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{dest.description}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed">{dest.tagline}</p>
                 </div>
 
                 <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
                   <div>
                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Budget Est.</span>
-                    <span className="text-[#1c4d6f] font-black text-sm">{dest.price}</span>
+                    <span className="text-[#1c4d6f] font-black text-sm">{dest.price_estimate}</span>
                   </div>
                   <a
                     href={`/destinations/${dest.slug}`}

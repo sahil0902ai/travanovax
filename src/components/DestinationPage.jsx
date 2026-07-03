@@ -73,10 +73,70 @@ const DESTINATION_DATA = {
 };
 
 export default function DestinationPage({ slug, onOpenQuote }) {
-  const data = DESTINATION_DATA[slug.toLowerCase()] || DESTINATION_DATA.bali;
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    const loadDest = async () => {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      const normalize = (raw) => {
+        if (!raw) return null;
+        return {
+          title: raw.title || '',
+          tagline: raw.tagline || '',
+          heroImage: raw.hero_image || raw.heroImage || '',
+          duration: raw.duration || '',
+          priceEstimate: raw.price_estimate || raw.priceEstimate || '',
+          highlights: raw.highlights || [],
+          itinerary: raw.itinerary || []
+        };
+      };
+
+      if (!supabaseUrl || !supabaseAnonKey) {
+        const savedRaw = localStorage.getItem('travanovax_editable_destinations');
+        if (savedRaw) {
+          const parsed = JSON.parse(savedRaw);
+          const match = parsed.find(d => d.slug === slug.toLowerCase());
+          if (match) {
+            setData(normalize(match));
+            setLoading(false);
+            return;
+          }
+        }
+        setData(normalize(DESTINATION_DATA[slug.toLowerCase()] || DESTINATION_DATA.bali));
+        setLoading(false);
+      } else {
+        try {
+          const url = `${supabaseUrl}/rest/v1/destinations?slug=eq.${slug.toLowerCase()}&select=*`;
+          const response = await fetch(url, {
+            headers: {
+              'apikey': supabaseAnonKey,
+              'Authorization': `Bearer ${supabaseAnonKey}`
+            }
+          });
+          if (response.ok) {
+            const list = await response.json();
+            if (list && list.length > 0) {
+              setData(normalize(list[0]));
+            } else {
+              setData(normalize(DESTINATION_DATA[slug.toLowerCase()] || DESTINATION_DATA.bali));
+            }
+          } else {
+            setData(normalize(DESTINATION_DATA[slug.toLowerCase()] || DESTINATION_DATA.bali));
+          }
+        } catch (err) {
+          console.error("Failed to load destination details:", err);
+          setData(normalize(DESTINATION_DATA[slug.toLowerCase()] || DESTINATION_DATA.bali));
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    loadDest();
   }, [slug]);
 
   const handleBack = (e) => {
@@ -84,6 +144,15 @@ export default function DestinationPage({ slug, onOpenQuote }) {
     window.history.pushState({}, '', '/');
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
+
+  if (loading || !data) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+        <div className="w-10 h-10 border-4 border-[#1c4d6f] border-t-transparent rounded-full animate-spin"></div>
+        <span className="text-xs text-gray-500 mt-2 font-semibold">Loading itinerary...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
