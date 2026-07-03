@@ -2,11 +2,11 @@ import React from 'react';
 import logoImg from '../assets/logo_footer.jpg';
 
 /* ─── Brand constants ─────────────────────────────────────────────────────── */
-const PHONE = '+91 99999 99999';
-const PHONE_HREF = 'tel:+919999999999';
+const PHONE = '+91 75958 02012';
+const PHONE_HREF = 'tel:+917595802012';
 const EMAIL = 'hello@travanovax.com';
 const EMAIL_HREF = 'mailto:hello@travanovax.com';
-const WHATSAPP_HREF = 'https://wa.me/919999999999?text=Hi%20TRAVANOVAX!';
+const WHATSAPP_HREF = 'https://wa.me/917595802012?text=Hi%20TRAVANOVAX!';
 // PLACEHOLDER — replace with real address before launch
 const ADDRESS = '123, Travel House, MG Road\nMumbai — 400001, Maharashtra';
 

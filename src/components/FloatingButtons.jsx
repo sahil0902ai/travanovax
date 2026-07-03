@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const WHATSAPP_HREF = 'https://wa.me/919999999999?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!';
+const WHATSAPP_HREF = 'https://wa.me/917595802012?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!';
 
 const WAIcon = () => (
   <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5 md:w-5 md:h-5" aria-hidden="true">
@@ -32,7 +32,7 @@ export default function FloatingButtons() {
           Call Us Now
         </span>
         <a
-          href="tel:+919999999999"
+          href="tel:+917595802012"
           aria-label="Call TRAVANOVAX"
           className="w-10 h-10 md:w-12 md:h-12 bg-[#1c4d6f] hover:bg-[#163f5b] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 min-w-[40px]"
         >

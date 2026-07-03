@@ -20,7 +20,7 @@ export default function MobileBottomBar({ onOpenQuote }) {
         <div className="flex items-center gap-2.5 px-3 py-2.5">
           {/* Call icon shortcut */}
           <a
-            href="tel:+919999999999"
+            href="tel:+917595802012"
             aria-label="Call TRAVANOVAX"
             className="flex-none w-12 h-12 bg-[#1c4d6f]/10 active:bg-[#1c4d6f]/20 rounded-xl flex flex-col items-center justify-center text-[#1c4d6f] transition-colors"
           >
@@ -33,7 +33,7 @@ export default function MobileBottomBar({ onOpenQuote }) {
 
           {/* WhatsApp icon shortcut */}
           <a
-            href="https://wa.me/919999999999?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!"
+            href="https://wa.me/917595802012?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp TRAVANOVAX"

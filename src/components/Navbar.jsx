@@ -11,9 +11,9 @@ const navLinks = [
 
 import logoImg from '../assets/logo_icon.png';
 
-const PHONE_NUMBER = '+91 99999 99999';
-const PHONE_HREF = 'tel:+919999999999';
-const WHATSAPP_HREF = 'https://wa.me/919999999999?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!';
+const PHONE_NUMBER = '+91 75958 02012';
+const PHONE_HREF = 'tel:+917595802012';
+const WHATSAPP_HREF = 'https://wa.me/917595802012?text=Hi%20TRAVANOVAX%2C%20I%27d%20like%20to%20plan%20a%20trip!';
 
 export default function Navbar({ onOpenQuote }) {
   const [scrolled, setScrolled] = useState(false);
