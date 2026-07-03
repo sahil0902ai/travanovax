@@ -64,7 +64,7 @@ export default function ContactForm({ prefillDest = '' }) {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate(fields);
     if (Object.keys(newErrors).length) {
@@ -72,13 +72,41 @@ export default function ContactForm({ prefillDest = '' }) {
       return;
     }
     setLoading(true);
-    // Simulated async submit — swap this for Formspree/EmailJS
-    setTimeout(() => {
-      console.log('TRAVANOVAX Inquiry Submitted:', fields);
-      setLoading(false);
-      setSubmitted(true);
-      setFields({ name: '', email: '', phone: '', destination: '' });
-    }, 1200);
+
+    const formspreeUrl = import.meta.env.VITE_FORMSPREE_URL;
+
+    if (formspreeUrl) {
+      try {
+        const response = await fetch(formspreeUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(fields),
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+          setFields({ name: '', email: '', phone: '', destination: '' });
+        } else {
+          const data = await response.json();
+          setErrors({ submit: data.error || 'Something went wrong. Please try again.' });
+        }
+      } catch (err) {
+        setErrors({ submit: 'Network error. Please check your connection and try again.' });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      // Simulated async submit fallback for local testing
+      setTimeout(() => {
+        console.log('TRAVANOVAX Inquiry Submitted (Simulation):', fields);
+        setLoading(false);
+        setSubmitted(true);
+        setFields({ name: '', email: '', phone: '', destination: '' });
+      }, 1200);
+    }
   };
 
   return (
@@ -213,6 +241,13 @@ export default function ContactForm({ prefillDest = '' }) {
                     />
                     <FieldError message={errors.destination} />
                   </div>
+
+                  {errors.submit && (
+                    <div className="text-red-500 text-sm flex items-center gap-1.5 bg-red-50 border border-red-200 p-3 rounded-xl">
+                      <AlertCircle size={16} className="shrink-0" />
+                      <span>{errors.submit}</span>
+                    </div>
+                  )}
 
                   <button
                     type="submit"

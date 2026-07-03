@@ -53,17 +53,45 @@ export default function QuoteModal({ isOpen, onClose }) {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate(fields);
     if (Object.keys(newErrors).length) { setErrors(newErrors); return; }
     setLoading(true);
-    setTimeout(() => {
-      console.log('TRAVANOVAX Quote Request:', fields);
-      setLoading(false);
-      setSubmitted(true);
-      setFields({ name: '', email: '', phone: '', destination: '' });
-    }, 1200);
+
+    const formspreeUrl = import.meta.env.VITE_FORMSPREE_URL;
+
+    if (formspreeUrl) {
+      try {
+        const response = await fetch(formspreeUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(fields),
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+          setFields({ name: '', email: '', phone: '', destination: '' });
+        } else {
+          const data = await response.json();
+          setErrors({ submit: data.error || 'Something went wrong. Please try again.' });
+        }
+      } catch (err) {
+        setErrors({ submit: 'Network error. Please try again.' });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setTimeout(() => {
+        console.log('TRAVANOVAX Quote Request (Simulation):', fields);
+        setLoading(false);
+        setSubmitted(true);
+        setFields({ name: '', email: '', phone: '', destination: '' });
+      }, 1200);
+    }
   };
 
   const handleClose = () => {
@@ -190,6 +218,14 @@ export default function QuoteModal({ isOpen, onClose }) {
                           className={`${inputClasses(errors.destination)} resize-none`} />
                         <FieldError message={errors.destination} />
                       </div>
+
+                      {errors.submit && (
+                        <div className="text-red-500 text-xs flex items-center gap-1.5 bg-red-50 border border-red-200 p-2.5 rounded-xl">
+                          <AlertCircle size={14} className="shrink-0" />
+                          <span>{errors.submit}</span>
+                        </div>
+                      )}
+
                       <button
                         type="submit"
                         disabled={loading}
