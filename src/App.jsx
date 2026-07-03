@@ -2,36 +2,8 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import './index.css';
 import LandingPage from './components/LandingPage';
 
-// Code-split the Admin Panel so normal visitors don't download Firebase SDK overhead
+// Code-split the Admin Panel so normal visitors don't download Supabase SDK overhead
 const AdminPanel = lazy(() => import('./components/AdminPanel'));
-
-// Helper to convert Firestore REST response format back to plain JSON
-function parseFirestoreFields(fields) {
-  if (!fields) return {};
-  const obj = {};
-  for (const key in fields) {
-    const val = fields[key];
-    if (val.stringValue !== undefined) {
-      obj[key] = val.stringValue;
-    } else if (val.integerValue !== undefined) {
-      obj[key] = parseInt(val.integerValue, 10);
-    } else if (val.doubleValue !== undefined) {
-      obj[key] = parseFloat(val.doubleValue);
-    } else if (val.booleanValue !== undefined) {
-      obj[key] = val.booleanValue;
-    } else if (val.mapValue !== undefined) {
-      obj[key] = parseFirestoreFields(val.mapValue.fields);
-    } else if (val.arrayValue !== undefined) {
-      const values = val.arrayValue.values || [];
-      obj[key] = values.map(item => {
-        if (item.mapValue !== undefined) return parseFirestoreFields(item.mapValue.fields);
-        if (item.stringValue !== undefined) return item.stringValue;
-        return item;
-      });
-    }
-  }
-  return obj;
-}
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -48,12 +20,13 @@ function App() {
     return () => window.removeEventListener('popstate', handlePath);
   }, []);
 
-  // Fetch Firestore Content via REST API to preserve code splitting & avoid eager Firebase load
+  // Fetch Supabase Content via REST API to preserve code splitting & avoid eager SDK load
   useEffect(() => {
     const loadContent = async () => {
-      const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-      if (!projectId) {
+      if (!supabaseUrl || !supabaseAnonKey) {
         // Fallback to local storage or defaults in local development
         const saved = localStorage.getItem('travanovax_editable_content');
         if (saved) {
@@ -62,15 +35,21 @@ function App() {
         setContentLoading(false);
       } else {
         try {
-          const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/siteContent/content`;
-          const response = await fetch(url);
+          const url = `${supabaseUrl}/rest/v1/site_content?id=eq.content&select=content`;
+          const response = await fetch(url, {
+            headers: {
+              'apikey': supabaseAnonKey,
+              'Authorization': `Bearer ${supabaseAnonKey}`
+            }
+          });
           if (response.ok) {
             const data = await response.json();
-            const parsed = parseFirestoreFields(data.fields);
-            setSiteContent(parsed);
+            if (data && data.length > 0 && data[0].content) {
+              setSiteContent(data[0].content);
+            }
           }
         } catch (err) {
-          console.error("Failed to load site content from Firestore REST API:", err);
+          console.error("Failed to load site content from Supabase REST API:", err);
         } finally {
           setContentLoading(false);
         }
@@ -92,8 +71,8 @@ function App() {
     );
   }
 
-  // Show dynamic loader during Firestore retrieval (only if in Live Mode)
-  const isDemo = !import.meta.env.VITE_FIREBASE_PROJECT_ID;
+  // Show dynamic loader during Supabase retrieval (only if in Live Mode)
+  const isDemo = !import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY;
   if (contentLoading && !isDemo) {
     return (
       <div className="min-h-screen bg-[#071a24] flex items-center justify-center">

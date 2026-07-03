@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LogOut, Save, Users, FileText, Search, Plus, Trash2, ArrowLeft, RefreshCw, Key, ShieldCheck } from 'lucide-react';
-import { isDemoMode, auth, db } from '../firebase';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { isDemoMode, supabase } from '../supabaseClient';
 
 // ─── Default Content Template ───────────────────────────────────────────────
 const DEFAULT_CONTENT = {
@@ -123,11 +121,18 @@ export default function AdminPanel() {
       if (savedUser) setUser({ email: savedUser });
       setLoading(false);
     } else {
-      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-        setUser(firebaseUser);
+      // Get current active session
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setUser(session?.user ?? null);
         setLoading(false);
       });
-      return unsubscribe;
+
+      // Listen for dynamic sign in/out events
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(session?.user ?? null);
+        setLoading(false);
+      });
+      return () => subscription.unsubscribe();
     }
   }, []);
 
@@ -149,9 +154,10 @@ export default function AdminPanel() {
       }
     } else {
       try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
       } catch (err) {
-        setLoginError(err.message.replace('Firebase: ', ''));
+        setLoginError(err.message);
       }
     }
   };
@@ -161,7 +167,7 @@ export default function AdminPanel() {
       localStorage.removeItem('travanovax_mock_admin');
       setUser(null);
     } else {
-      await signOut(auth);
+      await supabase.auth.signOut();
     }
   };
 
@@ -208,15 +214,24 @@ export default function AdminPanel() {
       }
     } else {
       try {
-        const docRef = doc(db, "siteContent", "content");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setContent(docSnap.data());
-        } else {
-          setContent(DEFAULT_CONTENT);
+        const { data, error } = await supabase
+          .from('site_content')
+          .select('content')
+          .eq('id', 'content')
+          .single();
+        
+        if (error) {
+          // Handle item not found gracefully
+          if (error.code === 'PGRST116') {
+            setContent(DEFAULT_CONTENT);
+          } else {
+            throw error;
+          }
+        } else if (data?.content) {
+          setContent(data.content);
         }
       } catch (err) {
-        console.error("Error fetching Firestore content:", err);
+        console.error("Error fetching Supabase content:", err);
       }
     }
   };
@@ -239,8 +254,11 @@ export default function AdminPanel() {
       }, 600);
     } else {
       try {
-        await setDoc(doc(db, "siteContent", "content"), content);
-        alert('Content synced successfully to Firestore live database!');
+        const { error } = await supabase
+          .from('site_content')
+          .upsert({ id: 'content', content: content, updated_at: new Date().toISOString() });
+        if (error) throw error;
+        alert('Content synced successfully to Supabase database!');
       } catch (err) {
         alert('Error saving content: ' + err.message);
       } finally {
@@ -280,7 +298,7 @@ export default function AdminPanel() {
               <ShieldCheck size={26} className="text-[#e38d37]" />
             </div>
             <h2 className="text-2xl font-black tracking-tight">TRAVANOVAX Admin</h2>
-            <p className="text-white/60 text-xs mt-1">Authorized travel design partners only</p>
+            <p className="text-white/60 text-xs mt-1">Authorized travel design partners only (Supabase)</p>
             {isDemoMode && (
               <span className="absolute top-3 right-3 bg-amber-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow">
                 Demo Mode
@@ -379,7 +397,7 @@ export default function AdminPanel() {
         {isDemoMode && (
           <div className="bg-amber-50 border border-amber-200 text-amber-800 text-xs px-4 py-3 rounded-2xl flex items-center justify-between gap-4">
             <div className="leading-relaxed">
-              <strong>⚠️ Demo Mode Enabled:</strong> Firebase variables are not set in your project environment. All Leads are simulated, and Content changes will save to your browser's LocalStorage only (re-loads instantly for your testing). Paste your config keys in Vercel settings to go live.
+              <strong>⚠️ Demo Mode Enabled:</strong> Supabase variables are not set in your project environment. All Leads are simulated, and Content changes will save to your browser's LocalStorage only (re-loads instantly for your testing). Paste your config keys in Vercel settings to go live.
             </div>
           </div>
         )}
