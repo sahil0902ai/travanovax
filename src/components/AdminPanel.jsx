@@ -174,24 +174,30 @@ export default function AdminPanel() {
   // ─── Fetching Data ────────────────────────────────────────────────────────
   const fetchLeads = async () => {
     setLeadsLoading(true);
-    const execUrl = import.meta.env.VITE_APPS_SCRIPT_URL;
 
-    if (execUrl) {
+    if (!isDemoMode && supabase) {
       try {
-        const response = await fetch(execUrl);
-        if (response.ok) {
-          const data = await response.json();
-          setLeads(data);
-        } else {
-          console.error("Failed to fetch Google Sheet leads");
-        }
+        const { data, error } = await supabase
+          .from('leads')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        
+        const formatted = data.map(item => ({
+          timestamp: item.created_at ? new Date(item.created_at).toLocaleString('en-IN', { hour12: false }).replace(',', '') : 'Recent',
+          name: item.name,
+          email: item.email,
+          phone: item.phone,
+          destination: item.destination
+        }));
+        setLeads(formatted);
       } catch (err) {
-        console.error("Network error fetching leads:", err);
+        console.error("Error fetching leads from Supabase:", err);
       } finally {
         setLeadsLoading(false);
       }
     } else {
-      // Demo mode / No sheet URL
+      // Demo mode
       setTimeout(() => {
         const savedLeads = localStorage.getItem('travanovax_simulated_leads');
         if (savedLeads) {

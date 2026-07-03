@@ -73,6 +73,50 @@ export default function ContactForm({ prefillDest = '' }) {
     }
     setLoading(true);
 
+    // 1. If live mode, save the lead to Supabase via native REST API call to keep bundle small!
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseAnonKey) {
+      try {
+        await fetch(`${supabaseUrl}/rest/v1/leads`, {
+          method: 'POST',
+          headers: {
+            'apikey': supabaseAnonKey,
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            name: fields.name,
+            email: fields.email,
+            phone: fields.phone,
+            destination: fields.destination,
+            created_at: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        console.error('Database connection error logging lead:', err);
+      }
+    } else {
+      // Demo Mode: save locally to simulated leads list so they show up in Leads Tab
+      const savedLeadsRaw = localStorage.getItem('travanovax_simulated_leads');
+      const savedLeads = savedLeadsRaw ? JSON.parse(savedLeadsRaw) : [
+        { timestamp: '2026-07-03 10:24', name: 'Arjun Verma', email: 'arjun.verma@gmail.com', phone: '+91 98234 56789', destination: 'Switzerland Family Getaway (June, 8 days)' },
+        { timestamp: '2026-07-02 18:41', name: 'Neha Gupta', email: 'neha.g@outlook.com', phone: '+91 99112 23344', destination: 'Maldives Honeymoon Resort, water villa (Oct, 5 days)' },
+        { timestamp: '2026-07-01 14:12', name: 'Vikram Malhotra', email: 'vikram.m@corporates.in', phone: '+91 98100 98100', destination: 'Kashmir Trekking Trip with friends (Aug, 7 days)' }
+      ];
+      
+      const newLead = {
+        timestamp: new Date().toLocaleString(),
+        name: fields.name,
+        email: fields.email,
+        phone: fields.phone,
+        destination: fields.destination
+      };
+      localStorage.setItem('travanovax_simulated_leads', JSON.stringify([newLead, ...savedLeads]));
+    }
+
     const formspreeUrl = import.meta.env.VITE_FORMSPREE_URL;
 
     if (formspreeUrl) {
@@ -101,7 +145,6 @@ export default function ContactForm({ prefillDest = '' }) {
     } else {
       // Simulated async submit fallback for local testing
       setTimeout(() => {
-        console.log('TRAVANOVAX Inquiry Submitted (Simulation):', fields);
         setLoading(false);
         setSubmitted(true);
         setFields({ name: '', email: '', phone: '', destination: '' });
