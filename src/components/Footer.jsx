@@ -78,7 +78,7 @@ export default function Footer() {
               <img
                 src={logoImg}
                 alt="TRAVANOVAX — Explore the Extraordinary"
-                className="rounded-lg object-cover w-36 h-11 shadow-md"
+                className="rounded-lg object-contain bg-white p-1 w-36 h-12 shadow-md"
               />
             </a>
 

@@ -83,8 +83,8 @@ export default function Navbar({ onOpenQuote }) {
             <img
               src={logoImg}
               alt="TRAVANOVAX — Explore the Extraordinary"
-              className={`rounded-lg object-cover transition-all duration-300 shadow-md ${
-                scrolled ? 'h-9 w-28 sm:w-32' : 'h-11 w-32 sm:w-36'
+              className={`rounded-lg object-contain bg-white p-1 transition-all duration-300 shadow-md ${
+                scrolled ? 'h-10 w-28 sm:w-32' : 'h-12 w-32 sm:w-36'
               }`}
             />
           </a>
