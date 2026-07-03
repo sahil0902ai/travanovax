@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Custom breakpoint — 480px for "extra-small" screens between mobile and tablet */
+@custom-variant xs (&:where([data-screen="xs"] *), @media (min-width: 480px));
+
+@theme {
+  --breakpoint-xs: 480px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-gray-800;
+  }
+
+  /* Prevent iOS font size inflation */
+  input, textarea, select {
+    font-size: max(16px, 1em);
+  }
+}
