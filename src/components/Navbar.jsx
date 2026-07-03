@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ];
 
-import logoImg from '../assets/logo_header.jpg';
+import logoImg from '../assets/logo_icon.png';
 
 const PHONE_NUMBER = '+91 99999 99999';
 const PHONE_HREF = 'tel:+919999999999';
@@ -74,19 +74,24 @@ export default function Navbar({ onOpenQuote }) {
             scrolled ? 'h-12 md:h-14' : 'h-14 md:h-16'
           }`}
         >
-          {/* Logo Badge */}
+          {/* Logo */}
           <a
             href="#hero"
             onClick={(e) => handleNav(e, '#hero')}
-            className="flex items-center shrink-0"
+            className="flex items-center shrink-0 gap-2 select-none"
           >
             <img
               src={logoImg}
-              alt="TRAVANOVAX"
-              className={`rounded-full object-contain bg-white p-[6px] transition-all duration-300 shadow-md w-auto ${
-                scrolled ? 'h-[28px] md:h-[36px]' : 'h-[32px] md:h-[40px]'
-              }`}
+              alt=""
+              className="object-contain w-8 h-8 md:w-9 md:h-9 transition-all duration-300"
             />
+            <span
+              className={`font-black tracking-tight leading-none text-white transition-all duration-300 ${
+                scrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'
+              }`}
+            >
+              TRAVANOVA<span className="text-[#e38d37]">X</span>
+            </span>
           </a>
 
           {/* Desktop nav links */}
